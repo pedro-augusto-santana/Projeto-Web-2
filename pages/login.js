@@ -25,11 +25,15 @@ doLoginButton.onclick = (e) => {
     })
   }).then((response) => response.json())
     .then((response) => {
+      console.log(response);
       if (response.error == true) {
         showModal(response.error, response.reason);
       }
       else {
-        window.localStorage.setItem("email", loginForm.elements["email"].value);
+        window.sessionStorage.setItem("email", loginForm.elements["email"].value);
+        window.sessionStorage.setItem("hash", response.token);
+        window.sessionStorage.setItem("role", response.role);
+        window.sessionStorage.setItem("name", response.name);
         window.location.href = "/home";
       }
     });

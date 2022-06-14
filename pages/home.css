@@ -1,0 +1,35 @@
+.header-container {
+  height: 64px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+}
+
+.navbar-item {
+  padding: 0px 50px;
+}
+
+.user-section {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.home-page-content {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar-container {
+  background-color: #3e3e3e;
+  height: 100%;
+  width: 25%;
+}

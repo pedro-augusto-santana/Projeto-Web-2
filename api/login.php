@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . "/User.php";
+
 if (empty($_POST)) {
     $_POST = json_decode(file_get_contents('php://input', true), true);
 }
@@ -42,10 +43,12 @@ function validateLogin()
         ], JSON_UNESCAPED_UNICODE);
         die();
     }
-    $GLOBALS["role"] = $resp["role"];
+
     echo json_encode([
         "error" => false,
-        "data" => $resp
+        "token" => $resp['hash'],
+        "role" => $resp["role"],
+        "name" => $resp["name"]
     ], JSON_UNESCAPED_UNICODE);
     die();
 }
