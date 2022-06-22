@@ -1,34 +1,18 @@
 <?php
 class Database {
     function __construct() {
-        $this->cursor = new SQLite3(dirname(__DIR__) . "/database/db.sqlite");
-
-        if (!$this->cursor) {
-            echo json_encode([
-                "error" => true,
-                "reason" => "Houve um erro na conexão com o banco de dados",
-                "code" => 500
-            ], JSON_UNESCAPED_UNICODE);
-            die();
-        }
+        $this->conn = new SQLite3(dirname(__DIR__) . "/database/db.sqlite");
     }
 
-    function execute($query) {
-        $data = [];
-        $db_response = $this->cursor->query($query);
-        if ($db_response == false) return $data;
-        try {
-            while ($row = $db_response->fetchArray(SQLITE3_ASSOC)) {
-                $data = $row;
-            }
-        } catch (Exception $e) {}
-        return $data;
+    function query($query) {
+        $db_resp = $this->conn->query($query);
+        if (!$db_resp) return false;
+        return $db_resp;
     }
 
     function insert($query) {
-        $statement = $this->cursor->prepare($query);
-        $statement->execute();
-        if (!$statement) return false;
+        $db_resp = $this->conn->exec($query);
+        if (!$db_resp) return false;
         return true;
     }
-}
+};

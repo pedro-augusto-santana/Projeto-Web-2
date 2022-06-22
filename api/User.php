@@ -1,55 +1,57 @@
 <?php
-include_once __DIR__ . "/Database.php";
+require_once "Database.php";
 
 class User
 {
     public static $DB;
-    static function getUser($email, $passwd)
-    {
-        $response = self::$DB->execute("SELECT * FROM users WHERE email = '$email' AND password = '$passwd'");
-        if (!$response) return [];
-        return [
-            "email" => $response["email"],
-            "password" => $response["password"],
-            "name" => $response["name"],
-            "role" => $response["role"],
-            "hash" => $response["hash"]
-        ];
+    static function userCount() {
+        $user_count = self::$DB->query("SELECT COUNT() as count FROM users u");
+        if (!$user_count) return 0;
+        $user_count = $user_count->fetchArray(SQLITE3_ASSOC);
+        return $user_count['count'];
     }
 
-    static function emailExists($email)
+    static function getUser($token)
     {
-        $response = self::$DB->execute("SELECT email FROM users WHERE email = '$email'");
-        if (count($response) > 0) return true;
-        return false;
+        $user = self::$DB->query("SELECT u.email, u.name, u.role, r.lvl FROM users u, roles r WHERE u.role = r.id AND u.token = '$token'");
+        if (!$user) return false;
+        return $user->fetchArray(SQLITE3_ASSOC);
     }
 
-    static function validate($email, $hash)
+    static function getRole($email)
     {
-        try {
-            $saved_hash = self::$DB->execute("SELECT hash FROM users WHERE email='$email'")["hash"];
-            return ($saved_hash == $hash);
-        } catch (Exception $e) {
-            return false;
-        }
+        $user = self::$DB->query("SELECT role FROM users WHERE email='$email'");
+        if (!$user) return false;
+        return $user->fetchArray(SQLITE3_ASSOC);
     }
 
-    static function createUser($email, $password, $role, $name)
+    static function validate($email, $passwd)
     {
-        if (User::emailExists($email)) {
-            echo json_encode([
-                "error" => true,
-                "reason" => "O email fornecido já está cadastrado",
-                "code" => 409
-            ], JSON_UNESCAPED_UNICODE);
-            die();
-        }
-        $hash = sha1("$email$name");
-        $response = self::$DB->insert("INSERT INTO users (email, password, 'role', name, hash) VALUES ('$email',
-        '$password', '$role', '$name', '$hash')");
-        if (!$response) return false;
+        $user = self::$DB->query("SELECT role, token FROM users WHERE email='$email' and pass='$passwd'");
+        if (!$user) return false;
+        return $user->fetchArray(SQLITE3_ASSOC);
+    }
+
+    static function validateToken($token)
+    {
+        $user = self::$DB->query("SELECT role FROM users WHERE token='$token'");
+        return (bool) $user;
+    }
+
+    static function userExists($email)
+    {
+        $user = self::$DB->query("SELECT email FROM users WHERE email='$email'");
+        $user = $user->fetchArray(SQLITE3_ASSOC);
+        if (!$user) return false;
         return true;
     }
-}
+
+    static function addUser($name, $email, $passwd)
+    {
+        $token = sha1("$email$passwd");
+        $new_user = self::$DB->insert("INSERT INTO users (name, email, pass, token) VALUES ('$name', '$email', '$passwd', '$token')");
+        return $new_user;
+    }
+};
 
 User::$DB = new Database();
