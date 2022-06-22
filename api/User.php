@@ -4,7 +4,8 @@ require_once "Database.php";
 class User
 {
     public static $DB;
-    static function userCount() {
+    static function userCount()
+    {
         $user_count = self::$DB->query("SELECT COUNT() as count FROM users u");
         if (!$user_count) return 0;
         $user_count = $user_count->fetchArray(SQLITE3_ASSOC);
@@ -50,7 +51,7 @@ class User
     {
         $token = sha1("$email$passwd");
         $new_user = self::$DB->insert("INSERT INTO users (name, email, pass, token) VALUES ('$name', '$email', '$passwd', '$token')");
-        return $new_user;
+        return [$new_user, $token];
     }
 };
 

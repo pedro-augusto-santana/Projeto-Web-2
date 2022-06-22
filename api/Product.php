@@ -4,6 +4,11 @@ require_once "Database.php";
 class Product
 {
     public static $DB;
+    static function addProduct($name, $sale_price, $buy_price, $quantity, $description, $seller) {
+        $added = self::$DB->insert("INSERT INTO products (name,sale_price,buy_price,quantity,description,seller)
+            VALUES ('$name',$sale_price,$buy_price,$quantity,'$description',$seller)");
+        return $added;
+    }
 
     static function productCount()
     {
@@ -35,6 +40,30 @@ class Product
         if (!$stockCost) return 0;
         $stockCost = $stockCost->fetchArray(SQLITE3_ASSOC);
         return number_format($stockCost['total_value'], 2);
+    }
+
+    static function listProducts() {
+        $product_list = self::$DB->query("SELECT * FROM products p");
+        $result_set = [];
+        if (!$product_list) return [];
+        while ($row = $product_list->fetchArray(SQLITE3_ASSOC)) {
+            $result_set[] = $row;
+        }
+        return $result_set;
+    }
+
+    static function getProductByID($id) {
+        $product = self::$DB->query("SELECT * FROM products p WHERE p.id='$id'");
+        if (!$product) return false;
+        $product = $product->fetchArray(SQLITE3_ASSOC);
+        return $product;
+    }
+
+    static function updateProduct($id, $name, $sale_price, $buy_price, $description, $seller, $quantity) {
+        $update = self::$DB->query("UPDATE products SET name='$name', sale_price='$sale_price', buy_price='$buy_price',
+            description='$description', seller='$seller', quantity=$quantity' WHERE id=$id");
+        if (!$update) return false;
+        return true;
     }
 }
 

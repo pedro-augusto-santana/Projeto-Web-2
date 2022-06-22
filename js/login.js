@@ -10,12 +10,17 @@ loginForm.onsubmit = (e) => {
   fetch(`/api/functions.php?action=login&email=${email}&passwd=${passwd}`)
     .then((response) => response.json())
     .then((response) => {
-      if (response.code != 200) {}
+      if (response.code != 200) {
+        const errModal = document.getElementById("err-modal");
+        errModal.style.display = "flex";
+        errModal.innerHTML = `<p>Erro: ${response.message}</p>`;
+        setTimeout(() => { errModal.style.display = "none" }, 7500);
+      }
       else {
-        document.cookie=`croodtoken=${response.token};`;
+        document.cookie = `croodtoken=${response.token};`;
         window.location.href = "/home.php";
       }
-  });
+    });
 }
 
 loginBtn.onclick = (e) => {

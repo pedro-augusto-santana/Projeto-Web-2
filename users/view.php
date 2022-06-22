@@ -1,7 +1,7 @@
 <?php
 session_start();
 $required_lvl = 4;
-if ($_SESSION['lvl'] < $required_lvl) {
+if ($_SESSION['access'] < $required_lvl) {
     header("location: /403.php");
 }
 

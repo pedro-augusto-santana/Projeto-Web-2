@@ -1,8 +1,8 @@
 <?php
-session_destroy();
 session_start();
 require_once "./api/User.php";
 require_once "./api/Product.php";
+require_once "./api/Seller.php";
 
 if (empty($_COOKIE['croodtoken'])) header("location: /login.php");
 
@@ -47,7 +47,7 @@ $_SESSION['token'] = $userdata['token'];
                     <span class="metric__description">usuários cadastrados</span>
                 </div>
                 <div class="metric__item">
-                    <span class="metric__count"><?= "412" ?></span>
+                    <span class="metric__count"><?= Seller::sellerCount() ?></span>
                     <span class="metric__description">fornecedores parceiros</span>
                 </div>
                 <div class="metric__item">

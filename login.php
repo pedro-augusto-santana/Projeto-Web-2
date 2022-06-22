@@ -33,7 +33,7 @@ if ($_COOKIE['croodtoken']) {
                 <input type="submit" class="pointer login__log-button" value="Login">
             </div>
         </form>
-        <div id="err-modal hide"></div>
+        <div id="err-modal" style="display: none"></div>
     </div>
 </div>
 

@@ -34,7 +34,7 @@ $menu_items = [
         "activename" => "users"
     ]
 ];
-$menu_items = array_filter($menu_items, function($item) {
+$menu_items = array_filter($menu_items, function ($item) {
     return $_SESSION['access'] >= $item['access'];
 });
 ?>
@@ -92,7 +92,7 @@ $menu_items = array_filter($menu_items, function($item) {
             <div class="sidebar-menu__item <?= isCurrent($item['activename']) ? "active" : "" ?>" onclick="window.location.href = '<?= $item['linkto'] ?>'">
                 <span><?= $item['slug'] ?></span>
                 <span class="material-symbols-sharp" style="margin-left: 15px">
-<?=$item['icon']?>
+                    <?= $item['icon'] ?>
                 </span>
             </div>
         <?php endforeach ?>

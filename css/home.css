@@ -17,9 +17,11 @@
 }
 
 .homepage__metrics {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, 40%);
+  grid-template-rows: repeat(3, 33%);
+  grid-column-gap: 50px;
+  grid-row-gap: 20px;
   height: 50%;
   margin: 40px;
 }
@@ -29,7 +31,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 50%;
+  width: 100%;
   padding: 15px;
   margin: 15px 0px;
   border: 1px solid black;

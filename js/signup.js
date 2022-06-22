@@ -1,5 +1,5 @@
 const signupForm = document.getElementById("signup-form");
-const loginBtn =  document.getElementById("login-btn");
+const loginBtn = document.getElementById("login-btn");
 
 loginBtn.onclick = (e) => {
   e.preventDefault();
@@ -15,16 +15,21 @@ signupForm.onsubmit = (e) => {
 
   fetch(`/api/functions.php`, {
     method: "POST",
-    headers: {'Content-Type':'application/x-www-form-urlencoded'},
+    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     body: `action=signup&email=${email}&passwd=${passwd}&name=${name}`
   })
     .then((response) => response.json())
     .then((response) => {
-      if (response.code != 200) {}
+      if (response.code != 200) {
+        errModal.style.display = "flex";
+        errModal.innerHTML = `<p>Erro: ${response.message}</p>`;
+        setTimeout(() => {errModal.style.display = "none"}, 7500);
+
+      }
       else {
-        document.cookie=`croodtoken=${response.token};`;
+        document.cookie = `croodtoken=${response.token};`;
         window.location.href = "/home.php";
       }
-  });
+    });
 
 }
