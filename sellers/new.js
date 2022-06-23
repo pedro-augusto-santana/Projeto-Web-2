@@ -31,4 +31,12 @@ sellerFormNew.onsubmit = (e) => {
     });
 };
 
+function loadStateCities(evt) {
+  fetch(`/api/functions.php?action=getCities&state=${evt.target.value}`, {
+  }).then(response => response.json())
+    .then(response => {
+      const citySelector = document.getElementById("city__select");
+      citySelector.innerHTML = response.data;
+    });
+}
 
