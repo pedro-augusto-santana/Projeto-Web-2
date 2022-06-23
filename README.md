@@ -14,3 +14,10 @@ Após o servidor ser inicializado, o site pode ser acessado em um browser com a 
 ```
 https://localhost:PORT/login.php
 ```
+
+Discentes:
+- Pedro Augusto Santana
+- José Felipe da Costa
+- Yago Borges
+
+2022.1
