@@ -46,7 +46,7 @@ $menu_items = array_filter($menu_items, function ($item) {
         width: 12%;
         min-width: 256px;
         height: 100%;
-        background-color: #1e1e1e;
+        background-color: black;
         color: white;
     }
 
@@ -79,7 +79,7 @@ $menu_items = array_filter($menu_items, function ($item) {
     .sidebar-menu__item:hover,
     .active {
         cursor: pointer;
-        background-color: black;
+        background-color: #004E98;
     }
 </style>
 

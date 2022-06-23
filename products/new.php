@@ -1,6 +1,6 @@
 <?php
 session_start();
-$required_lvl = 2;
+$required_lvl = 3;
 if ($_SESSION['access'] < $required_lvl) {
     header("location: /products/view.php");
 }

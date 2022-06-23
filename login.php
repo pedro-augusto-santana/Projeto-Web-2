@@ -1,10 +1,15 @@
 <?php
 require "./api/User.php";
 
-if ($_COOKIE['croodtoken']) {
-    if (User::validateToken($_COOKIE['croodtoken'])) {
-        header("location: /home.php");
+if (!$_GET['new-session']) {
+    if ($_COOKIE['croodtoken']) {
+        if (User::validateToken($_COOKIE['croodtoken'])) {
+            header("location: /home.php");
+        }
     }
+} else {
+    unset($_SESSION);
+    session_destroy();
 }
 ?>
 

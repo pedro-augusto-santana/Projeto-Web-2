@@ -53,6 +53,31 @@ class User
         $new_user = self::$DB->insert("INSERT INTO users (name, email, pass, token) VALUES ('$name', '$email', '$passwd', '$token')");
         return [$new_user, $token];
     }
+
+    static function getUserByID($id)
+    {
+        $user = self::$DB->query("SELECT u.name, u.email, r.name as role FROM users u, roles r WHERE u.role = r.id AND u.id=$id");
+        if (!$user) return false;
+        return $user->fetchArray(SQLITE3_ASSOC);
+    }
+
+    static function listUsers()
+    {
+        $user_list = self::$DB->query("SELECT u.id, u.name, u.email, r.name as role FROM users u, roles r WHERE r.id = u.role");
+        $result_set = [];
+        if (!$user_list) return [];
+        while ($row = $user_list->fetchArray(SQLITE3_ASSOC)) {
+            $result_set[] = $row;
+        }
+        return $result_set;
+    }
+
+    static function updateUser($id, $name, $email, $role)
+    {
+        $update = self::$DB->query("UPDATE users SET name='$name',email='$email',role='$role' WHERE id=$id");
+        if (!$update) return false;
+        return true;
+    }
 };
 
 User::$DB = new Database();

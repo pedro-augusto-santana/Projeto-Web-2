@@ -17,7 +17,7 @@ if ($_SESSION['access'] > 1) $enableEdit = true;
     <?php require_once "../templates/sidebar.php" ?>
     <div class="products__content">
         <div class="products__header page__header">
-            <div class="action-area">
+            <div class="action__area">
                 <span class="page-title">Produtos</span>
                 <?php if ($enableEdit) : ?>
                     <button class="add-more__btn" onclick="window.location.href = '/products/new.php' ">Adicionar produto +</button>

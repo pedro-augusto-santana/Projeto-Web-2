@@ -3,7 +3,7 @@ session_start();
 require_once "../api/Seller.php";
 
 $enableEdit = false;
-if ($_SESSION['access'] > 1) $enableEdit = true;
+if ($_SESSION['access'] >= 3) $enableEdit = true;
 ?>
 
 <head>
@@ -17,8 +17,8 @@ if ($_SESSION['access'] > 1) $enableEdit = true;
     <?php require_once "../templates/sidebar.php" ?>
     <div class="sellers__content">
         <div class="sellers__header page__header">
-            <div class="action-area">
-                <span class="page-title">Produtos</span>
+            <div class="action__area">
+                <span class="page-title">Fornecedores</span>
                 <?php if ($enableEdit) : ?>
                     <button class="add-more__btn" onclick="window.location.href = '/sellers/new.php' ">Adicionar fornecedor +</button>
                 <?php endif ?>

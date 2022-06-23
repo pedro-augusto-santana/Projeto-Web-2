@@ -14,5 +14,4 @@ if (!$_COOKIE['croodtoken']) header("location: /login.php");
 else header("location: /home.php");
 ?>
 </body>
-
 </html>

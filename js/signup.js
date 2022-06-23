@@ -21,6 +21,7 @@ signupForm.onsubmit = (e) => {
     .then((response) => response.json())
     .then((response) => {
       if (response.code != 200) {
+        const errModal = document.getElementById("err-modal");
         errModal.style.display = "flex";
         errModal.innerHTML = `<p>Erro: ${response.message}</p>`;
         setTimeout(() => {errModal.style.display = "none"}, 7500);

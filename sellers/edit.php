@@ -1,6 +1,6 @@
 <?php
 session_start();
-$required_lvl = 1;
+$required_lvl = 3;
 if ($_SESSION['access'] < $required_lvl) {
     header("location: /sellers/view.php");
 }
@@ -36,15 +36,15 @@ $seller = Seller::getSellerByID($_GET['id']);
             </div>
             <div class="form-edit__line">
                 <label for="sale_price">Cidade</label>
-                <input type="text" name="sale_price" value="<?= $seller['city'] ?>" required>
+                <input type="text" name="city" value="<?= $seller['city'] ?>" required>
             </div>
             <div class="form-edit__line">
                 <label for="buy_price">Gerente</label>
-                <input type="text" name="buy_price" value="<?= $seller['manager'] ?>" required>
+                <input type="text" name="manager" value="<?= $seller['manager'] ?>" required>
             </div>
             <div class="form-edit__line">
                 <label for="name">Contato</label>
-                <input type="text" name="description" value="<?= $seller['email'] ?>" required>
+                <input type="email" name="email" value="<?= $seller['email'] ?>" required>
             </div>
             <div class="btn__group">
                 <input class="action__btn" type="submit" value="Salvar">

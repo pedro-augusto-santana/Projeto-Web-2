@@ -1,7 +1,9 @@
 <?php
 session_start();
+
 require_once "User.php";
 require_once "Product.php";
+require_once "Seller.php";
 
 if (!empty($_POST)) {
     switch ($_POST['action']) {
@@ -20,6 +22,8 @@ if (!empty($_POST)) {
         case 'newSeller':
             createSeller();
             break;
+        case 'editUser':
+            editUser();
         default:
             handleInvalidAction();
     }
@@ -41,7 +45,7 @@ function doLogin()
         echo json_encode([
             "error" => true,
             "message" => "Email ou senha incorretos",
-            "code" => 404
+            "code" => 409
         ], JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -60,7 +64,7 @@ function doSignup()
         echo json_encode([
             "error" => true,
             "message" => "Um usuário com esse email já existe",
-            "code" => 404
+            "code" => 409
         ], JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -70,7 +74,7 @@ function doSignup()
         echo json_encode([
             "error" => true,
             "message" => "Não foi possível criar a conta. Tente novamente depois",
-            "code" => 404
+            "code" => 400
         ], JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -90,7 +94,7 @@ function editProduct()
         echo json_encode([
             "error" => true,
             "message" => "Não foi possível atualizar o produto. Tente novamente depois",
-            "code" => 404
+            "code" => 400
         ], JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -109,7 +113,7 @@ function createProduct()
         echo json_encode([
             "error" => true,
             "message" => "Não foi possível criar o produto",
-            "code" => 404
+            "code" => 400
         ], JSON_UNESCAPED_UNICODE);
         die();
     }
@@ -121,10 +125,61 @@ function createProduct()
 }
 
 function createSeller()
-{}
+{
+    $added = Seller::addSeller($_POST['name'], $_POST['city'], $_POST['manager'], $_POST['email']);
+    if (!$added) {
+        echo json_encode([
+            "error" => true,
+            "message" => "Não foi possível criar o fornecedor",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    echo json_encode([
+        "error" => false,
+        "code" => 200
+    ], JSON_UNESCAPED_UNICODE);
+    die();
+}
 
 function editSeller()
-{}
+{
+    $resp = Seller::updateSeller($_POST['id'], $_POST['name'], $_POST['city'], $_POST['manager'], $_POST['email']);
+    if (!$resp) {
+        echo json_encode([
+            "error" => true,
+            "message" => "Não foi possível atualizar o fornecedor. Tente novamente depois",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    echo json_encode([
+        "error" => false,
+        "code" => 200
+    ], JSON_UNESCAPED_UNICODE);
+    die();
+}
+
+function editUser()
+{
+    $resp = User::updateUser($_POST['id'], $_POST['name'], $_POST['email'], $_POST['role']);
+    if (!$resp) {
+        echo json_encode([
+            "error" => true,
+            "message" => "Não foi possível atualizar o usuário. Tente novamente depois",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    echo json_encode([
+        "error" => false,
+        "code" => 200
+    ], JSON_UNESCAPED_UNICODE);
+    die();
+}
 
 function handleInvalidAction()
 {
