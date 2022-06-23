@@ -24,6 +24,10 @@ if (!empty($_POST)) {
             break;
         case 'editUser':
             editUser();
+            break;
+        case 'deleteUser':
+            deleteUser();
+            break;
         default:
             handleInvalidAction();
     }
@@ -179,6 +183,25 @@ function editUser()
         "code" => 200
     ], JSON_UNESCAPED_UNICODE);
     die();
+}
+
+function deleteUser() {
+    $resp = User::deleteUser($_POST['id']);
+    if (!$resp) {
+    echo json_encode([
+        "error" => true,
+        "message" => "Não foi possível deletar o usuário. Tente novamente depois",
+        "code" => 400
+    ], JSON_UNESCAPED_UNICODE);
+    die();
+    }
+
+    echo json_encode([
+        "error" => false,
+        "code" => 200
+    ], JSON_UNESCAPED_UNICODE);
+    die();
+
 }
 
 function handleInvalidAction()

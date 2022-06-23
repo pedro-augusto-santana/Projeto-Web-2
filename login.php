@@ -27,7 +27,7 @@ if (!$_GET['new-session']) {
         <form method="POST" class="login-page__form" id="login-form">
             <div class="login-form__input-line">
                 <label for="email">Email</label>
-                <input class="login-form__input" id="login-email" type="text" name="email" placeholder="Digite seu email: " required>
+                <input class="login-form__input" id="login-email" type="email" name="email" placeholder="Digite seu email: " required>
             </div>
             <div class="login-form__input-line">
                 <label for="passwd">Senha</label>

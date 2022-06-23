@@ -78,6 +78,14 @@ class User
         if (!$update) return false;
         return true;
     }
+
+    static function deleteUser($id)
+    {
+        $update = self::$DB->query("DELETE FROM users WHERE id='$id'");
+        if (!$update) return false;
+        return true;
+    }
+
 };
 
 User::$DB = new Database();

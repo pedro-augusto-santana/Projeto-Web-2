@@ -25,7 +25,7 @@ if ($_COOKIE['croodtoken']) {
 
             <div class="signup-form__input-line">
                 <label for="email">Email</label>
-                <input class="signup-form__input" id="signup-email" type="text" name="email" placeholder="Digite seu email: ">
+                <input class="signup-form__input" id="signup-email" type="email" name="email" placeholder="Digite seu email: ">
             </div>
             <div class="signup-form__input-line">
                 <label for="passwd">Senha</label>

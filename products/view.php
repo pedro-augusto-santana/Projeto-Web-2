@@ -60,7 +60,7 @@ if ($_SESSION['access'] > 1) $enableEdit = true;
                                     edit_note
                                 </span>
                                 <?php if ($enableEdit) : ?>
-                                    <span id="<?= $product['id'] ?>" class="material-symbols-sharp tr__action delete" style="color: #ff1313">
+                                    <span id="<?= $product['id'] ?>" class="material-symbols-sharp tr__action product_delete" style="color: #ff1313">
                                         delete_forever
                                     <?php endif ?>
                                     </span>
