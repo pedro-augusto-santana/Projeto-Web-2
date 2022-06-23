@@ -46,5 +46,12 @@ class Seller
         if (!$update) return false;
         return true;
     }
+
+    static function deleteSeller($id)
+    {
+        $update = self::$DB->query("DELETE FROM sellers WHERE id='$id'");
+        if (!$update) return false;
+        return true;
+    }
 }
 Seller::$DB = new Database();

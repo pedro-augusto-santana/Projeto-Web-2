@@ -2,6 +2,7 @@
 session_start();
 require_once "../api/User.php";
 
+
 $enableEdit = false;
 if ($_SESSION['access'] > 4) $enableEdit = true;
 ?>

@@ -1,5 +1,6 @@
 <?php
 require_once "./api/User.php";
+
 if ($_COOKIE['croodtoken']) {
     if (User::validateToken($_COOKIE['croodtoken'])) {
         header("location: /home.php");

@@ -4,6 +4,7 @@ session_start();
 require_once "User.php";
 require_once "Product.php";
 require_once "Seller.php";
+require_once "Location.php";
 
 if (!empty($_POST)) {
     switch ($_POST['action']) {
@@ -28,6 +29,12 @@ if (!empty($_POST)) {
         case 'deleteUser':
             deleteUser();
             break;
+        case 'deleteSeller':
+            deleteSeller();
+            break;
+        case 'deleteProduct':
+            deleteProduct();
+            break;
         default:
             handleInvalidAction();
     }
@@ -35,6 +42,9 @@ if (!empty($_POST)) {
     switch ($_GET['action']) {
         case 'login':
             doLogin();
+            break;
+        case 'getCities':
+            getCitiesByState();
             break;
         default:
             handleInvalidAction();
@@ -185,15 +195,16 @@ function editUser()
     die();
 }
 
-function deleteUser() {
+function deleteUser()
+{
     $resp = User::deleteUser($_POST['id']);
     if (!$resp) {
-    echo json_encode([
-        "error" => true,
-        "message" => "Não foi possível deletar o usuário. Tente novamente depois",
-        "code" => 400
-    ], JSON_UNESCAPED_UNICODE);
-    die();
+        echo json_encode([
+            "error" => true,
+            "message" => "Não foi possível deletar o usuário. Tente novamente depois",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
     }
 
     echo json_encode([
@@ -201,7 +212,90 @@ function deleteUser() {
         "code" => 200
     ], JSON_UNESCAPED_UNICODE);
     die();
+}
 
+function deleteSeller()
+{
+    $products = Product::fromSeller($_POST['id']);
+    if (count($products) > 0) {
+        echo json_encode([
+            "error" => true,
+            "message" => "Há produtos cadastrados nesse fornecedor. Não é possível deletar.",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    $resp = Seller::deleteSeller($_POST['id']);
+    if (!$resp) {
+        echo json_encode([
+            "error" => true,
+            "message" => "Não foi possível deletar o fornecedor. Tente novamente depois",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    echo json_encode([
+        "error" => false,
+        "code" => 200
+    ], JSON_UNESCAPED_UNICODE);
+    die();
+}
+
+function deleteProduct()
+{
+    $resp = Product::deleteProduct($_POST['id']);
+
+    if (!$resp) {
+        echo json_encode([
+            "error" => true,
+            "message" => "Não foi possível deletar o produto. Tente novamente depois",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
+    echo json_encode([
+        "error" => false,
+        "code" => 200
+    ], JSON_UNESCAPED_UNICODE);
+    die();
+}
+
+function getCitiesByState()
+{
+    $resp = Location::getByStateAbrv($_GET['state']);
+    if (!$resp) {
+        echo json_encode([
+            "error" => true,
+            "message" => "Não foi possível deletar o produto. Tente novamente depois",
+            "code" => 400
+        ], JSON_UNESCAPED_UNICODE);
+        die();
+    }
+    $seller = [];
+    if ($_GET['id']) {
+        $seller = Seller::getSellerByID($_GET['id']);
+        $seller['city'] = explode(" - ", $seller['city'], 2)[0];
+    }
+
+    $options = [];
+    foreach ($resp as $city) {
+        if ($_GET['id']) {
+            $selected = $seller['city']== $city['name'] ? "selected" : "";
+            $options[] = "<option value=\"${city['name']}\" $selected>${city['name']}</option>";
+        } else {
+            $options[] = "<option value=\"${city['name']}\">${city['name']}</option>";
+        }
+    }
+
+    echo json_encode([
+        "error" => false,
+        "data" => $options,
+        "code" => 200
+    ], JSON_UNESCAPED_UNICODE);
+    die();
 }
 
 function handleInvalidAction()

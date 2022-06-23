@@ -7,3 +7,9 @@
 .sellers__content {
   width: 100%;
 }
+
+.location__select {
+  width: 50%;
+  border: 1px solid black;
+  padding: 10px;
+}

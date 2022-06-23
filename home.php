@@ -7,7 +7,7 @@ require_once "./api/Seller.php";
 if (empty($_COOKIE['croodtoken'])) header("location: /login.php");
 
 $userdata = User::getUser($_COOKIE['croodtoken']);
-if (!$userdata) header("location: /login.php");
+if (!$userdata) header("location: /login.php?new-session=true");
 $_SESSION['name'] = $userdata['name'];
 $_SESSION['role'] = $userdata['role'];
 $_SESSION['access'] = $userdata['lvl'];

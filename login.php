@@ -8,8 +8,9 @@ if (!$_GET['new-session']) {
         }
     }
 } else {
-    unset($_SESSION);
+    unset($_COOKIE['croodtoken']);
     session_destroy();
+    unset($_SESSION);
 }
 ?>
 

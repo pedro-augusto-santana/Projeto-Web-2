@@ -1,10 +1,13 @@
 <?php
 session_start();
+
 $required_lvl = 1;
 if ($_SESSION['access'] < $required_lvl) {
     header("location: /products/view.php");
 }
 require_once "../api/Product.php";
+require_once "../api/Seller.php";
+
 $product = Product::getProductByID($_GET['id']);
 ?>
 
@@ -52,7 +55,14 @@ $product = Product::getProductByID($_GET['id']);
             </div>
             <div class="form-edit__line">
                 <label for="seller">Fornecedor</label>
-                <input type="text" name="seller" value="<?= $product['seller'] ?>" required>
+                <!-- <input type="text" name="seller" value="<?= $product['seller'] ?>" required> -->
+                <select name="seller" class="form__select" required>
+                    <?php foreach (Seller::listSellers() as $seller) : ?>
+                        <option value="<?= $seller['id'] ?>" <?= $seller['id'] == $product['seller'] ? "selected" : "" ?>>
+                            <?= $seller['id'] . ' - ' . $seller['name'] ?></option>
+                    <?php endforeach ?>
+                </select>
+
             </div>
             <div class="btn__group">
                 <input class="action__btn" type="submit" value="Salvar">

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $required_lvl = 4;
 if ($_SESSION['access'] < $required_lvl) {
     header("location: /home.php");
@@ -41,7 +42,7 @@ $user = User::getUserByID($_GET['id']);
             <div class="form-edit__line">
                 <label for="role">Cargo</label>
                 <!-- <input type="text" name="role" value="<?= $user['role'] ?>" required> -->
-                <select name="role" id="role__select">
+                <select name="role" class="form__select">
                     <option value="1" <?= $user['role'] == 'admin' ? "selected" : "" ?>>Admin</option>
                     <option value="2" <?= $user['role'] == 'supervisor' ? "selected" : "" ?>>Supervisor</option>
                     <option value="3" <?= $user['role'] == 'manager' ? "selected" : "" ?>>Gerente</option>

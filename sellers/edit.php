@@ -5,7 +5,10 @@ if ($_SESSION['access'] < $required_lvl) {
     header("location: /sellers/view.php");
 }
 require_once "../api/Seller.php";
+require_once "../api/Location.php";
+
 $seller = Seller::getSellerByID($_GET['id']);
+[$seller_city, $seller_state] = explode(" - ", $seller['city'], 2);
 ?>
 
 <head>
@@ -36,7 +39,15 @@ $seller = Seller::getSellerByID($_GET['id']);
             </div>
             <div class="form-edit__line">
                 <label for="sale_price">Cidade</label>
-                <input type="text" name="city" value="<?= $seller['city'] ?>" required>
+                <!--<input type="text" name="city" value="<?= $seller['city'] ?>" required>-->
+                <select name="state" id="state__select" class="location__select" required onchange="loadStateCities(event)">
+                    <?php foreach (Location::listStates() as $state): ?>
+                    <option value="<?= $state['abrv'] ?>" <?= $state['abrv'] == $seller_state ? "selected" : ""?>>
+                            <?= $state['name'] . " - " . $state['abrv'] ?>
+                        </option>
+                    <?php endforeach ?>
+                </select>
+                <select name="city" id="city__select" class="location__select"></select>
             </div>
             <div class="form-edit__line">
                 <label for="buy_price">Gerente</label>

@@ -56,7 +56,7 @@ if ($_SESSION['access'] >= 3) $enableEdit = true;
                                     edit_note
                                 </span>
                                 <?php if ($enableEdit) : ?>
-                                    <span id="<?= $seller['id'] ?>" class="material-symbols-sharp tr__action seller_delete" style="color: #ff1313">
+                                    <span id="<?= $seller['id'] ?>" class="material-symbols-sharp tr__action seller_delete" style="color: #ff1313" onclick="deleteSeller(event)">
                                         delete_forever
                                     <?php endif ?>
                                     </span>
@@ -70,3 +70,4 @@ if ($_SESSION['access'] >= 3) $enableEdit = true;
 </div>
 
 <script src="../js/index.js"></script>
+<script src="./delete.js"></script>
