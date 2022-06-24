@@ -17,7 +17,7 @@ API::register('newSeller', 'createSeller');
 API::register('editSeller', 'editSeller');
 API::register('deleteSeller', 'deleteSeller');
 API::register('deleteUser', 'deleteUser');
-
+API::register('editUser', 'editUser');
 
 if (!empty($_POST)) {
     API::execute($_POST['action']);

@@ -1,6 +1,7 @@
 <?php
 class API {
     private static $methods = [];
+
     public static function register($action, $callback) {
         self::$methods[$action] = $callback;
     }

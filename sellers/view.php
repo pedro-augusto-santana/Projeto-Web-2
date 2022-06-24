@@ -41,7 +41,9 @@ if ($_SESSION['access'] >= 3) $enableEdit = true;
                     <th>Cidade</th>
                     <th>Gerente</th>
                     <th>Contato</th>
-                    <th>Acão</th>
+                    <?php if ($enableEdit) : ?>
+                        <th>Acão</th>
+                    <?php endif ?>
                 </tr>
                 <?php foreach (Seller::listSellers() as $seller) : ?>
                     <tr>
@@ -50,18 +52,18 @@ if ($_SESSION['access'] >= 3) $enableEdit = true;
                         <td><?= $seller['city'] ?></td>
                         <td><?= $seller['manager'] ?></td>
                         <td style="text-align: left;"><?= $seller['email'] ?></td>
-                        <td class="line-action line-id-<?= $seller['id'] ?>">
-                            <div class="tr__action_group">
-                                <span id="<?= $seller['id'] ?>" class="material-symbols-sharp tr__action edit" style="color: green" onclick="window.location.href='/sellers/edit.php?id=<?= $seller['id'] ?>'">
-                                    edit_note
-                                </span>
-                                <?php if ($enableEdit) : ?>
+                        <?php if ($enableEdit) : ?>
+                            <td class="line-action line-id-<?= $seller['id'] ?>">
+                                <div class="tr__action_group">
+                                    <span id="<?= $seller['id'] ?>" class="material-symbols-sharp tr__action edit" style="color: green" onclick="window.location.href='/sellers/edit.php?id=<?= $seller['id'] ?>'">
+                                        edit_note
+                                    </span>
                                     <span id="<?= $seller['id'] ?>" class="material-symbols-sharp tr__action seller_delete" style="color: #ff1313" onclick="deleteSeller(event)">
                                         delete_forever
-                                    <?php endif ?>
                                     </span>
-                            </div>
-                        </td>
+                                </div>
+                            </td>
+                        <?php endif ?>
                     </tr>
                 <?php endforeach ?>
             </table>

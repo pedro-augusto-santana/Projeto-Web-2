@@ -5,6 +5,7 @@ $required_lvl = 1;
 if ($_SESSION['access'] < $required_lvl) {
     header("location: /products/view.php");
 }
+
 require_once "../api/Product.php";
 require_once "../api/Seller.php";
 

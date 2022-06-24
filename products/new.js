@@ -1,6 +1,6 @@
 const productFormNew = document.getElementById("product-new__form");
+
 productFormNew.onsubmit = (e) => {
-  console.log("clicou aqui");
   e.preventDefault();
   const name = productFormNew.elements['name'].value;
   const sale_price = productFormNew.elements['sale_price'].value;

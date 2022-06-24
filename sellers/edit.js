@@ -9,7 +9,6 @@ window.onload = () => {
       const citySelector = document.getElementById("city__select");
       citySelector.innerHTML = response.data;
     });
-
 }
 
 const sellerFormEdit = document.getElementById("seller-edit__form");

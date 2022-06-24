@@ -22,7 +22,7 @@ $menu_items = [
     [
         "slug" => "Fornecedores",
         "linkto" => "/sellers/view.php",
-        "access" => 3,
+        "access" => 2,
         "icon" => "local_shipping",
         "activename" => "sellers"
     ],
@@ -34,6 +34,7 @@ $menu_items = [
         "activename" => "users"
     ]
 ];
+
 $menu_items = array_filter($menu_items, function ($item) {
     return $_SESSION['access'] >= $item['access'];
 });
