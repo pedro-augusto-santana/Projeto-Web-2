@@ -1,55 +1,28 @@
 <?php
 session_start();
 
+require_once "api.php";
 require_once "User.php";
 require_once "Product.php";
 require_once "Seller.php";
 require_once "Location.php";
 
+API::register('login', 'doLogin');
+API::register('signup', 'doSignup');
+API::register('getCities', 'getCitiesByState');
+API::register('newProduct', 'createProduct');
+API::register('editProduct', 'editProduct');
+API::register('deleteProduct', 'deleteProduct');
+API::register('newSeller', 'createSeller');
+API::register('editSeller', 'editSeller');
+API::register('deleteSeller', 'deleteSeller');
+API::register('deleteUser', 'deleteUser');
+
+
 if (!empty($_POST)) {
-    switch ($_POST['action']) {
-        case 'signup':
-            doSignup();
-            break;
-        case 'editProduct':
-            editProduct();
-            break;
-        case 'newProduct':
-            createProduct();
-            break;
-        case 'editSeller':
-            editSeller();
-            break;
-        case 'newSeller':
-            createSeller();
-            break;
-        case 'editUser':
-            editUser();
-            break;
-        case 'deleteUser':
-            deleteUser();
-            break;
-        case 'deleteSeller':
-            deleteSeller();
-            break;
-        case 'deleteProduct':
-            deleteProduct();
-            break;
-        default:
-            handleInvalidAction();
-    }
+    API::execute($_POST['action']);
 } elseif (!empty($_GET)) {
-    switch ($_GET['action']) {
-        case 'login':
-            doLogin();
-            break;
-        case 'getCities':
-            getCitiesByState();
-            break;
-        default:
-            handleInvalidAction();
-            break;
-    }
+    API::execute($_GET['action']);
 }
 
 function doLogin()
@@ -283,7 +256,7 @@ function getCitiesByState()
     $options = [];
     foreach ($resp as $city) {
         if ($_GET['id']) {
-            $selected = $seller['city']== $city['name'] ? "selected" : "";
+            $selected = $seller['city'] == $city['name'] ? "selected" : "";
             $options[] = "<option value=\"${city['name']}\" $selected>${city['name']}</option>";
         } else {
             $options[] = "<option value=\"${city['name']}\">${city['name']}</option>";
@@ -296,8 +269,4 @@ function getCitiesByState()
         "code" => 200
     ], JSON_UNESCAPED_UNICODE);
     die();
-}
-
-function handleInvalidAction()
-{
 }
