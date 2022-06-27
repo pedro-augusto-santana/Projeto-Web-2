@@ -14,7 +14,7 @@ class User
 
     static function getUser($token)
     {
-        $user = self::$DB->query("SELECT u.email, u.name, u.role, r.lvl FROM users u, roles r WHERE u.role = r.id AND u.token = '$token'");
+        $user = self::$DB->query("SELECT u.email, u.name, u.role, r.lvl, u.token FROM users u, roles r WHERE u.role = r.id AND u.token = '$token'");
         if (!$user) return false;
         return $user->fetchArray(SQLITE3_ASSOC);
     }
