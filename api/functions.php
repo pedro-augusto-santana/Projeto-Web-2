@@ -25,6 +25,7 @@ if (!empty($_POST)) {
     API::execute($_GET['action']);
 }
 
+
 function doLogin()
 {
     $login_response = User::validate($_GET['email'], $_GET['passwd']);

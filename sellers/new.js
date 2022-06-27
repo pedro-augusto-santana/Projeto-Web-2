@@ -27,6 +27,8 @@ sellerFormNew.onsubmit = (e) => {
     .then(response => {
       if (response.code == 200) {
         window.location.href = "/sellers/view.php";
+      } else {
+        window.alert(response.message);
       }
     });
 };

@@ -16,6 +16,8 @@ userFormEdit.onsubmit = (e) => {
     .then(response => {
       if (response.code == 200) {
         window.location.href = "/users/view.php";
+      } else {
+        window.alert(response.message);
       }
     });
 
